@@ -33,11 +33,14 @@ data_columns = ["time", "altitude", "velocity", "acceleration", "drag", "thrust"
 data_values = [0, launch_alt, 0, wet_weight, 0, 0, wet_mass]
 data = dict(zip(data_columns, data_values))  # now you can reference these in the code by their names
 
+print_interval = .25  # time interval for how often a row of data actually prints to the terminal
+
 apogee = launch_alt # initializing variable for apogee
 max_vel = 0 # same thing for max velocity
 
 # actual thing
 while data['altitude'] >= launch_alt:
+    
 
     data['time'] += delta_t
     air_density = float(air_data[air_data["Altitude"] > launch_alt].iloc[0]["Density"])
@@ -70,7 +73,10 @@ while data['altitude'] >= launch_alt:
     if data['velocity'] > max_vel:
         max_vel = data['velocity']
 
-apogee -= launch_alt
+    print("Time: %.2f  Altitude: %.2f  Velocity: %.2f" % (data['time'], data['altitude'], data['velocity']))
+
+
+apogee -= launch_alt  # ASL --> AGL
 
 print("Apogee: %i [ft]" % apogee)
 print("Max Velocity: %i [ft/s]" % max_vel)
