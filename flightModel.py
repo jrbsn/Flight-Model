@@ -33,9 +33,8 @@ data_columns = ["time", "altitude", "velocity", "acceleration", "drag", "thrust"
 data_values = [0, launch_alt, 0, wet_weight, 0, 0, wet_mass]
 data = dict(zip(data_columns, data_values))  # now you can reference these in the code by their names
 
-apogee = launch_alt
-max_vel = 0
-results = [[data['time'], data['altitude'], data['velocity'], data['acceleration']]]  # we're going to add to this in with every row of data and eventually make it a graph
+apogee = launch_alt # initializing variable for apogee
+max_vel = 0 # same thing for max velocity
 
 # actual thing
 while data['altitude'] >= launch_alt:
@@ -71,18 +70,7 @@ while data['altitude'] >= launch_alt:
     if data['velocity'] > max_vel:
         max_vel = data['velocity']
 
-    # Add data to Dataset for graphs
-    new_data = np.array([[data['time'], data['altitude'], data['velocity'], data['acceleration']]])
-    results = np.append(results, new_data, axis=0)
-
 apogee -= launch_alt
-
-# Graphs
-def showGraphs():
-    print(results.shape)
-    print(results[:, 0].shape)
-    plt.scatter(results[:, 0], results[:, 1])
-    plt.show()
 
 print("Apogee: %i [ft]" % apogee)
 print("Max Velocity: %i [ft/s]" % max_vel)
